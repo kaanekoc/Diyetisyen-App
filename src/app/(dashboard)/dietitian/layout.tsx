@@ -2,59 +2,36 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import { 
   IconLayoutDashboard, 
-  IconUsers, 
-  IconClipboardList, 
   IconCalendarEvent, 
   IconLogout, 
   IconMenu2,
   IconBell,
-  IconSettings
+  IconSettings,
+  IconStethoscope
 } from "@tabler/icons-react";
 import { Menu, MenuButton, MenuItems, MenuItem, Transition } from "@headlessui/react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SidebarNav } from "@/components/sidebar-nav";
 
 export default function DietitianLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 font-sans selection:bg-emerald-500/30">
       {/* Sidebar - Desktop */}
       <aside className="hidden lg:flex w-72 flex-col bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-800/50 shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-10 transition-all duration-300">
-        <div className="h-20 flex items-center px-8 border-b border-slate-200/50 dark:border-slate-800/50">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-400 shadow-lg shadow-indigo-500/20 flex items-center justify-center text-white font-bold text-xl">
-              D
+        <div className="h-24 flex items-center px-8 border-b border-slate-200/50 dark:border-slate-800/50 shrink-0">
+          <Link href="/dietitian" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 shadow-xl shadow-indigo-500/30 flex items-center justify-center text-white shrink-0">
+              <IconStethoscope stroke={2} className="w-7 h-7" />
             </div>
-            <span className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
-              Diyetisyen<span className="text-indigo-500">Pro</span>
+            <span className="font-black text-2xl tracking-tight text-slate-900 dark:text-white">
+              Nutri<span className="text-indigo-500">Pro</span>
             </span>
-          </div>
+          </Link>
         </div>
         
-        <nav className="flex-1 py-8 px-4 space-y-1.5 overflow-y-auto scrollbar-hide">
-          <p className="px-4 text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Ana Menü</p>
-          
-          <Link href="/dietitian" className="group flex items-center px-4 py-3 text-sm font-medium rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 transition-all duration-200">
-            <IconLayoutDashboard stroke={2} className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-            Dashboard
-          </Link>
-          <Link href="/dietitian/patients" className="group flex items-center px-4 py-3 text-sm font-medium rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-all duration-200">
-            <IconUsers stroke={1.5} className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-            Hastalarım (CRM)
-          </Link>
-          
-          <div className="h-4"></div>
-          <p className="px-4 text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Yönetim</p>
-          
-          <Link href="/dietitian/diet-plans" className="group flex items-center px-4 py-3 text-sm font-medium rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-all duration-200">
-            <IconClipboardList stroke={1.5} className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-            Diyet Listeleri
-          </Link>
-          <Link href="/dietitian/appointments" className="group flex items-center px-4 py-3 text-sm font-medium rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-all duration-200">
-            <IconCalendarEvent stroke={1.5} className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-            Randevular & Takvim
-          </Link>
-        </nav>
+        <SidebarNav role="dietitian" />
 
-        <div className="p-6">
+        <div className="p-6 shrink-0">
           <Link href="/api/auth/signout" className="group flex items-center justify-center gap-3 w-full px-4 py-3.5 text-sm font-bold rounded-2xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 shadow-xl shadow-slate-900/10 dark:shadow-white/10 transition-all duration-300">
             <IconLogout stroke={2} className="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" />
             Güvenli Çıkış
