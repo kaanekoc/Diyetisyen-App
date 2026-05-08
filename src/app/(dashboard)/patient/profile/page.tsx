@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Tab } from "@headlessui/react";
+import { Tab, TabGroup, TabList, TabPanels, TabPanel } from '@headlessui/react';
 import { 
   IconUser, 
   IconHeartbeat, 
@@ -63,48 +63,27 @@ export default function PatientProfilePage() {
         </Button>
       </div>
 
-      <Tab.Group>
-        <Tab.List className="flex space-x-2 rounded-2xl bg-slate-200/50 dark:bg-slate-800/50 p-1.5 max-w-2xl">
+      <TabGroup>
+        <TabList className="flex space-x-2 rounded-2xl bg-slate-200/50 dark:bg-slate-800/50 p-1.5 max-w-2xl">
           <Tab
-            className={({ selected }) =>
-              classNames(
-                'w-full rounded-xl py-3 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2',
-                selected
-                  ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200'
-              )
-            }
+            className="w-full rounded-xl py-3 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200 data-selected:bg-white data-selected:dark:bg-slate-900 data-selected:text-emerald-600 data-selected:dark:text-emerald-400 data-selected:shadow-sm"
           >
             <IconUser stroke={2} className="w-5 h-5" /> Kişisel Bilgiler
           </Tab>
           <Tab
-            className={({ selected }) =>
-              classNames(
-                'w-full rounded-xl py-3 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2',
-                selected
-                  ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200'
-              )
-            }
+            className="w-full rounded-xl py-3 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200 data-selected:bg-white data-selected:dark:bg-slate-900 data-selected:text-emerald-600 data-selected:dark:text-emerald-400 data-selected:shadow-sm"
           >
             <IconHeartbeat stroke={2} className="w-5 h-5" /> Sağlık Durumu
           </Tab>
           <Tab
-            className={({ selected }) =>
-              classNames(
-                'w-full rounded-xl py-3 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2',
-                selected
-                  ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200'
-              )
-            }
+            className="w-full rounded-xl py-3 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200 data-selected:bg-white data-selected:dark:bg-slate-900 data-selected:text-emerald-600 data-selected:dark:text-emerald-400 data-selected:shadow-sm"
           >
             <IconFileText stroke={2} className="w-5 h-5" /> Tahlil Sonuçları
           </Tab>
-        </Tab.List>
+        </TabList>
 
-        <Tab.Panels className="mt-8">
-          <Tab.Panel className="focus:outline-none">
+        <TabPanels className="mt-8">
+          <TabPanel className="focus:outline-none">
             <Card className="border-0 shadow-xl shadow-slate-200/30 dark:shadow-none bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 rounded-3xl overflow-hidden">
               <CardHeader className="bg-slate-50/50 dark:bg-slate-800/20 border-b border-slate-100 dark:border-slate-800/50 p-6 sm:p-8">
                 <CardTitle className="text-xl font-bold text-slate-800 dark:text-white">Fiziksel Özellikler ve Hedefler</CardTitle>
@@ -137,9 +116,9 @@ export default function PatientProfilePage() {
                 </div>
               </CardContent>
             </Card>
-          </Tab.Panel>
+          </TabPanel>
 
-          <Tab.Panel className="focus:outline-none space-y-8">
+          <TabPanel className="focus:outline-none space-y-8">
             <div className="grid lg:grid-cols-2 gap-8">
               <Card className="border-0 shadow-xl shadow-slate-200/30 dark:shadow-none bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 rounded-3xl overflow-hidden">
                 <CardHeader className="bg-rose-50/50 dark:bg-rose-900/10 border-b border-rose-100 dark:border-rose-800/50 p-6">
@@ -195,9 +174,9 @@ export default function PatientProfilePage() {
                 </CardContent>
               </Card>
             </div>
-          </Tab.Panel>
+          </TabPanel>
 
-          <Tab.Panel className="focus:outline-none">
+          <TabPanel className="focus:outline-none">
             <Card className="border-0 shadow-xl shadow-slate-200/30 dark:shadow-none bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 rounded-3xl overflow-hidden">
               <CardHeader className="bg-slate-50/50 dark:bg-slate-800/20 border-b border-slate-100 dark:border-slate-800/50 p-6 sm:p-8">
                 <CardTitle className="text-xl font-bold">Tahlil Sonuçları & Belgeler</CardTitle>
@@ -233,9 +212,9 @@ export default function PatientProfilePage() {
                 </div>
               </CardFooter>
             </Card>
-          </Tab.Panel>
-        </Tab.Panels>
-      </Tab.Group>
+          </TabPanel>
+        </TabPanels>
+      </TabGroup>
     </div>
   );
 }

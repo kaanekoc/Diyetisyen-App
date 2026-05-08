@@ -4,7 +4,7 @@ import { useState, Fragment } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Tab } from "@headlessui/react";
+import { Tab, TabGroup, TabList, TabPanels, TabPanel } from '@headlessui/react';
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
@@ -99,39 +99,25 @@ export default function MealsPage() {
               </div>
             </div>
             
-            <Tab.Group>
+            <TabGroup>
               <div className="px-6 sm:px-8 pt-6">
-                <Tab.List className="flex space-x-2 rounded-2xl bg-slate-100 dark:bg-slate-800/80 p-1.5 max-w-md">
+                <TabList className="flex space-x-2 rounded-2xl bg-slate-100 dark:bg-slate-800/80 p-1.5 max-w-md">
                   <Tab
-                    className={({ selected }) =>
-                      classNames(
-                        'w-full rounded-xl py-3 text-sm font-bold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2',
-                        selected
-                          ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-md'
-                          : 'text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200'
-                      )
-                    }
+                    className="w-full rounded-xl py-3 text-sm font-bold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200 data-selected:bg-white data-selected:dark:bg-slate-900 data-selected:text-emerald-600 data-selected:dark:text-emerald-400 data-selected:shadow-md"
                   >
                     <IconTypography stroke={2} className="w-5 h-5" /> Metin
                   </Tab>
                   <Tab
-                    className={({ selected }) =>
-                      classNames(
-                        'w-full rounded-xl py-3 text-sm font-bold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2',
-                        selected
-                          ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-md'
-                          : 'text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200'
-                      )
-                    }
+                    className="w-full rounded-xl py-3 text-sm font-bold leading-5 transition-all duration-200 focus:outline-none flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200 data-selected:bg-white data-selected:dark:bg-slate-900 data-selected:text-emerald-600 data-selected:dark:text-emerald-400 data-selected:shadow-md"
                   >
                     <IconCamera stroke={2} className="w-5 h-5" /> Fotoğraf
                   </Tab>
-                </Tab.List>
+                </TabList>
               </div>
 
               <CardContent className="p-6 sm:p-8">
-                <Tab.Panels>
-                  <Tab.Panel className="focus:outline-none space-y-6">
+                <TabPanels>
+                  <TabPanel className="focus:outline-none space-y-6">
                     <form onSubmit={handleAnalyze} className="space-y-6">
                       <div className="space-y-3">
                         <Label htmlFor="mealDesc" className="text-sm font-bold text-slate-700 dark:text-slate-300">Yemeğinizi detaylıca tarif edin</Label>
@@ -157,9 +143,9 @@ export default function MealsPage() {
                         ) : "Analiz Et ve Kaydet"}
                       </Button>
                     </form>
-                  </Tab.Panel>
+                  </TabPanel>
 
-                  <Tab.Panel className="focus:outline-none">
+                  <TabPanel className="focus:outline-none">
                     <div className="border-2 border-dashed border-emerald-200 dark:border-emerald-800/50 rounded-3xl p-12 flex flex-col items-center justify-center text-center hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10 transition-colors cursor-pointer group relative bg-slate-50/50 dark:bg-slate-900/20">
                       <Input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
                       <div className="w-20 h-20 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm ring-1 ring-emerald-100 dark:ring-emerald-800 group-hover:scale-110 transition-transform">
@@ -170,10 +156,10 @@ export default function MealsPage() {
                         Yemeğinizin net bir fotoğrafını yükleyin. Yapay zeka içeriği otomatik algılayacaktır.
                       </p>
                     </div>
-                  </Tab.Panel>
-                </Tab.Panels>
+                  </TabPanel>
+                </TabPanels>
               </CardContent>
-            </Tab.Group>
+            </TabGroup>
           </Card>
 
           {/* AI Result Alert */}

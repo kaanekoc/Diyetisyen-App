@@ -4,7 +4,7 @@ import { useState, Fragment } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tab } from "@headlessui/react";
+import { Tab, TabGroup, TabList, TabPanels, TabPanel } from '@headlessui/react';
 import { 
   IconCalendarEvent, 
   IconClock, 
@@ -49,35 +49,21 @@ export default function PatientAppointmentsPage() {
         
         {/* Sol Taraf: Randevular (Tabs) */}
         <div className="xl:col-span-7 space-y-6">
-          <Tab.Group>
-            <Tab.List className="flex space-x-2 rounded-2xl bg-slate-200/50 dark:bg-slate-800/50 p-1.5 max-w-sm">
+          <TabGroup>
+            <TabList className="flex space-x-2 rounded-2xl bg-slate-200/50 dark:bg-slate-800/50 p-1.5 max-w-sm">
               <Tab
-                className={({ selected }) =>
-                  classNames(
-                    'w-full rounded-xl py-2.5 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none',
-                    selected
-                      ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200'
-                  )
-                }
+                className="w-full rounded-xl py-2.5 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200 data-selected:bg-white data-selected:dark:bg-slate-900 data-selected:text-emerald-600 data-selected:dark:text-emerald-400 data-selected:shadow-sm"
               >
                 Yaklaşan Randevular
               </Tab>
               <Tab
-                className={({ selected }) =>
-                  classNames(
-                    'w-full rounded-xl py-2.5 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none',
-                    selected
-                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200'
-                  )
-                }
+                className="w-full rounded-xl py-2.5 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200 data-selected:bg-white data-selected:dark:bg-slate-900 data-selected:text-slate-900 data-selected:dark:text-white data-selected:shadow-sm"
               >
                 Geçmiş
               </Tab>
-            </Tab.List>
-            <Tab.Panels className="mt-6">
-              <Tab.Panel
+            </TabList>
+            <TabPanels className="mt-6">
+              <TabPanel
                 className={classNames(
                   'rounded-xl focus:outline-none focus:ring-0',
                   'ring-white/60 ring-offset-2 ring-offset-emerald-400'
@@ -131,12 +117,12 @@ export default function PatientAppointmentsPage() {
                     <p className="text-slate-500 dark:text-slate-400">Yaklaşan bir randevunuz bulunmuyor.</p>
                   </div>
                 )}
-              </Tab.Panel>
-              <Tab.Panel className="rounded-xl p-8 text-center text-slate-500 bg-slate-50 dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800">
+              </TabPanel>
+              <TabPanel className="rounded-xl p-8 text-center text-slate-500 bg-slate-50 dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800">
                 Geçmiş randevu kaydınız bulunmuyor.
-              </Tab.Panel>
-            </Tab.Panels>
-          </Tab.Group>
+              </TabPanel>
+            </TabPanels>
+          </TabGroup>
 
           <div className="bg-amber-50 dark:bg-amber-500/10 ring-1 ring-amber-200/50 dark:ring-amber-500/20 rounded-2xl p-5 flex items-start gap-4">
             <div className="bg-amber-100 dark:bg-amber-500/20 p-2 rounded-full shrink-0">

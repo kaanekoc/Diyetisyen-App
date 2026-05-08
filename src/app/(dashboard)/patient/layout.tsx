@@ -13,7 +13,7 @@ import {
   IconMenu2,
   IconBell
 } from "@tabler/icons-react";
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, MenuButton, MenuItems, MenuItem, Transition } from "@headlessui/react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function PatientLayout({ children }: { children: ReactNode }) {
@@ -107,13 +107,13 @@ export default function PatientLayout({ children }: { children: ReactNode }) {
 
             {/* Headless UI Dropdown */}
             <Menu as="div" className="relative inline-block text-left">
-              <Menu.Button className="flex items-center gap-3 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+              <MenuButton className="flex items-center gap-3 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
                 <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 p-[2px] shadow-md shadow-emerald-500/20">
                   <div className="h-full w-full rounded-full bg-white dark:bg-slate-900 flex items-center justify-center">
                     <span className="font-bold text-sm text-emerald-600 dark:text-emerald-400">DK</span>
                   </div>
                 </div>
-              </Menu.Button>
+              </MenuButton>
               <Transition
                 as={Fragment}
                 enter="transition ease-out duration-200"
@@ -123,42 +123,32 @@ export default function PatientLayout({ children }: { children: ReactNode }) {
                 leaveFrom="transform opacity-100 scale-100 translate-y-0"
                 leaveTo="transform opacity-0 scale-95 translate-y-2"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-slate-100 dark:divide-slate-800 rounded-2xl bg-white dark:bg-slate-900 shadow-2xl ring-1 ring-black/5 focus:outline-none">
+                <MenuItems className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-slate-100 dark:divide-slate-800 rounded-2xl bg-white dark:bg-slate-900 shadow-2xl ring-1 ring-black/5 focus:outline-none">
                   <div className="px-4 py-3">
                     <p className="text-sm text-slate-500 dark:text-slate-400">Giriş yapıldı</p>
                     <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">danisan@mail.com</p>
                   </div>
                   <div className="px-2 py-2">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          href="/patient/profile"
-                          className={`${
-                            active ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400' : 'text-slate-700 dark:text-slate-300'
-                          } group flex w-full items-center rounded-xl px-3 py-2 text-sm transition-colors`}
-                        >
-                          <IconUser stroke={1.5} className="mr-3 h-4 w-4" />
-                          Profil Ayarları
-                        </Link>
-                      )}
-                    </Menu.Item>
+                    <MenuItem
+                      as="a"
+                      href="/patient/profile"
+                      className="group flex w-full items-center rounded-xl px-3 py-2 text-sm transition-colors text-slate-700 dark:text-slate-300 data-focus:bg-emerald-50 data-focus:dark:bg-emerald-500/10 data-focus:text-emerald-700 data-focus:dark:text-emerald-400"
+                    >
+                      <IconUser stroke={1.5} className="mr-3 h-4 w-4" />
+                      Profil Ayarları
+                    </MenuItem>
                   </div>
                   <div className="px-2 py-2">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          href="/api/auth/signout"
-                          className={`${
-                            active ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400' : 'text-slate-700 dark:text-slate-300'
-                          } group flex w-full items-center rounded-xl px-3 py-2 text-sm transition-colors`}
-                        >
-                          <IconLogout stroke={1.5} className="mr-3 h-4 w-4" />
-                          Çıkış Yap
-                        </Link>
-                      )}
-                    </Menu.Item>
+                    <MenuItem
+                      as="a"
+                      href="/api/auth/signout"
+                      className="group flex w-full items-center rounded-xl px-3 py-2 text-sm transition-colors text-slate-700 dark:text-slate-300 data-focus:bg-rose-50 data-focus:dark:bg-rose-500/10 data-focus:text-rose-600 data-focus:dark:text-rose-400"
+                    >
+                      <IconLogout stroke={1.5} className="mr-3 h-4 w-4" />
+                      Çıkış Yap
+                    </MenuItem>
                   </div>
-                </Menu.Items>
+                </MenuItems>
               </Transition>
             </Menu>
           </div>
