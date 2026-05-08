@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User role enum
+enum Role {
+  DIETITIAN
+  PATIENT
+}
+
+// Users Table
+model User {
+  id               String            @id @default(cuid())
+  email            String            @unique
+  passwordHash     String
+  role             Role
+  createdAt        DateTime          @default(now())
+
+  dietitianProfile DietitianProfile?
+  patientProfile   PatientProfile?
+}
+
+// Dietitian Profiles
+model DietitianProfile {
+  id           String        @id @default(cuid())
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  specialty    String?
+
+  patients     PatientProfile[]
+  appointments Appointment[]
+  dietPlans    DietPlan[]
+}
+
+// Patient Profiles
+model PatientProfile {
+  id               String         @id @default(cuid())
+  userId           String         @unique
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dietitianId      String?
+  dietitian        DietitianProfile? @relation(fields: [dietitianId], references: [id], onDelete: SetNull)
+
+  targetWeightKg   Float?
+  dailyCalorieGoal Int?
+  dateOfBirth      DateTime?
+
+  appointments     Appointment[]
+  dietPlans        DietPlan[]
+  mealLogs         MealLog[]
+  waterLogs        WaterLog[]
+  measurements     Measurement[]
+}
+
+// Diet Plan
+model DietPlan {
+  id           String            @id @default(cuid())
+  dietitianId  String
+  dietitian    DietitianProfile  @relation(fields: [dietitianId], references: [id], onDelete: Cascade)
+  patientId    String
+  patient      PatientProfile    @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  title        String
+  startDate    DateTime
+  endDate      DateTime
+
+  meals        DietMeal[]
+}
+
+// Diet Meal inside a Plan
+model DietMeal {
+  id             String    @id @default(cuid())
+  dietPlanId     String
+  dietPlan       DietPlan  @relation(fields: [dietPlanId], references: [id], onDelete: Cascade)
+  timeOfDay      String
+  description    String    @db.Text
+  targetCalories Int?
+}
+
+// Patient's Meal Log
+model MealLog {
+  id          String         @id @default(cuid())
+  patientId   String
+  patient     PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  timeOfDay   String
+  description String         @db.Text
+  imageUrl    String?
+  aiCalories  Float?
+  aiProtein   Float?
+  aiCarbs     Float?
+  aiFat       Float?
+  loggedAt    DateTime       @default(now())
+}
+
+// Patient's Water Log
+model WaterLog {
+  id          String         @id @default(cuid())
+  patientId   String
+  patient     PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  amountMl    Int
+  loggedAt    DateTime       @default(now())
+}
+
+// Patient's Body Measurement
+model Measurement {
+  id          String         @id @default(cuid())
+  patientId   String
+  patient     PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  weightKg    Float?
+  bmi         Float?
+  waistCm     Float?
+  recordedAt  DateTime       @default(now())
+}
+
+// Appointments
+model Appointment {
+  id           String            @id @default(cuid())
+  dietitianId  String
+  dietitian    DietitianProfile  @relation(fields: [dietitianId], references: [id], onDelete: Cascade)
+  patientId    String
+  patient      PatientProfile    @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  scheduledAt  DateTime
+  status       String            @default("PENDING") // PENDING, CONFIRMED, CANCELLED
+}
