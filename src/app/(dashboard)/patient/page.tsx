@@ -28,14 +28,18 @@ export default function PatientDashboardPage() {
           <p className="text-slate-500 dark:text-slate-400 mt-2 text-lg">Bugünkü hedefleriniz, ilerlemeniz ve bildirimleriniz.</p>
         </div>
         <div className="flex items-center gap-3">
-          <Button render={<Link href="/patient/water" />} variant="outline" className="h-12 px-5 rounded-2xl border-emerald-200 hover:bg-emerald-50 dark:border-emerald-800 dark:hover:bg-emerald-900/50 font-bold transition-all">
-            <IconDroplet stroke={2} className="mr-2 h-5 w-5 text-cyan-500" />
-            Su Ekle
-          </Button>
-          <Button render={<Link href="/patient/meals" />} className="h-12 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold shadow-xl shadow-emerald-500/20 transition-all">
-            <IconPlus stroke={2} className="mr-2 h-5 w-5" />
-            Öğün Ekle
-          </Button>
+          <Link href="/patient/water">
+            <Button variant="outline" className="h-12 px-5 rounded-2xl border-emerald-200 hover:bg-emerald-50 dark:border-emerald-800 dark:hover:bg-emerald-900/50 font-bold transition-all">
+              <IconDroplet stroke={2} className="mr-2 h-5 w-5 text-cyan-500" />
+              Su Ekle
+            </Button>
+          </Link>
+          <Link href="/patient/meals">
+            <Button className="h-12 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold shadow-xl shadow-emerald-500/20 transition-all">
+              <IconPlus stroke={2} className="mr-2 h-5 w-5" />
+              Öğün Ekle
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -182,9 +186,11 @@ export default function PatientDashboardPage() {
                 </CardTitle>
                 <CardDescription className="text-base mt-1">Bugün tükettiğiniz öğünlerin özeti.</CardDescription>
               </div>
-              <Button variant="ghost" size="sm" render={<Link href="/patient/meals" />} className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-500/10 font-bold rounded-xl h-10 px-4">
-                Tümünü Gör
-              </Button>
+              <Link href="/patient/meals">
+                <Button variant="ghost" size="sm" className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-500/10 font-bold rounded-xl h-10 px-4">
+                  Tümünü Gör
+                </Button>
+              </Link>
             </CardHeader>
             <CardContent className="p-0">
               <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -210,9 +216,11 @@ export default function PatientDashboardPage() {
                 ))}
                 
                 <div className="p-6 sm:p-8">
-                  <Button variant="outline" className="w-full h-14 border-2 border-dashed border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 text-emerald-600 dark:border-emerald-800/50 dark:hover:bg-emerald-900/20 dark:text-emerald-400 rounded-2xl font-bold text-base transition-all" render={<Link href="/patient/meals" />}>
-                    <IconPlus stroke={2} className="w-5 h-5 mr-2" /> Ara Öğün Ekle
-                  </Button>
+                  <Link href="/patient/meals">
+                    <Button variant="outline" className="w-full h-14 border-2 border-dashed border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 text-emerald-600 dark:border-emerald-800/50 dark:hover:bg-emerald-900/20 dark:text-emerald-400 rounded-2xl font-bold text-base transition-all">
+                      <IconPlus stroke={2} className="w-5 h-5 mr-2" /> Ara Öğün Ekle
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </CardContent>
