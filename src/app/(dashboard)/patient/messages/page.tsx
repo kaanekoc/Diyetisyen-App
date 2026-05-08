@@ -5,7 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Send, Paperclip, Image as ImageIcon, FileText, Check, CheckCheck, MoreVertical } from "lucide-react";
+import { 
+  IconSend, 
+  IconPaperclip, 
+  IconPhoto, 
+  IconFileText, 
+  IconCheck, 
+  IconChecks, 
+  IconDotsVertical 
+} from "@tabler/icons-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function PatientMessagesPage() {
@@ -38,67 +46,67 @@ export default function PatientMessagesPage() {
   };
 
   return (
-    <div className="h-[calc(100vh-8rem)] animate-in fade-in duration-500">
-      <Card className="h-full border-none shadow-md overflow-hidden flex flex-col bg-white dark:bg-card">
+    <div className="h-[calc(100vh-8rem)] animate-in fade-in duration-500 pb-8">
+      <Card className="h-full border-0 shadow-2xl shadow-emerald-500/10 overflow-hidden flex flex-col bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 rounded-3xl">
         
         {/* Chat Header */}
-        <CardHeader className="bg-emerald-50 dark:bg-emerald-950/20 border-b border-emerald-100 dark:border-emerald-900/50 flex flex-row items-center justify-between py-4 px-6 shrink-0">
-          <div className="flex items-center gap-4">
+        <CardHeader className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-b border-emerald-100 dark:border-emerald-800/30 flex flex-row items-center justify-between py-5 px-6 shrink-0 relative overflow-hidden">
+          <div className="flex items-center gap-4 relative z-10">
             <div className="relative">
-              <Avatar className="h-12 w-12 border-2 border-white dark:border-slate-800 shadow-sm">
-                <AvatarFallback className="bg-emerald-100 text-emerald-700 font-bold dark:bg-emerald-900/50 dark:text-emerald-400">DY</AvatarFallback>
+              <Avatar className="h-14 w-14 border-2 border-white dark:border-slate-800 shadow-md">
+                <AvatarFallback className="bg-gradient-to-br from-emerald-400 to-teal-500 text-white font-extrabold text-lg">DY</AvatarFallback>
               </Avatar>
-              <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-card rounded-full"></span>
+              <span className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-slate-800 rounded-full shadow-sm"></span>
             </div>
             <div>
-              <CardTitle className="text-lg text-emerald-900 dark:text-emerald-100">Dyt. Ayşe Yılmaz</CardTitle>
-              <div className="text-xs text-emerald-600 dark:text-emerald-400 flex items-center mt-0.5">
+              <CardTitle className="text-xl font-extrabold text-emerald-950 dark:text-emerald-100">Dyt. Ayşe Yılmaz</CardTitle>
+              <div className="text-sm font-medium text-emerald-600 dark:text-emerald-400 flex items-center mt-0.5">
                 Şu an çevrimiçi
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="text-slate-500 hover:bg-emerald-100 dark:hover:bg-emerald-900/50">
-              <MoreVertical className="w-5 h-5" />
+          <div className="flex items-center gap-2 relative z-10">
+            <Button variant="ghost" size="icon" className="h-10 w-10 text-emerald-700 hover:bg-emerald-100 dark:text-emerald-300 dark:hover:bg-emerald-800/50 rounded-full transition-colors">
+              <IconDotsVertical stroke={2} className="w-5 h-5" />
             </Button>
           </div>
         </CardHeader>
 
         {/* Chat Messages */}
-        <CardContent className="flex-1 overflow-y-auto p-6 bg-slate-50/50 dark:bg-background space-y-4">
-          <div className="text-center mb-6">
-            <Badge variant="outline" className="bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-400 font-medium">Bugün</Badge>
+        <CardContent className="flex-1 overflow-y-auto p-6 bg-slate-50/50 dark:bg-transparent space-y-6">
+          <div className="text-center my-4">
+            <Badge className="bg-slate-200/50 text-slate-500 hover:bg-slate-200/50 border-none dark:bg-slate-800/50 dark:text-slate-400 font-bold px-4 py-1.5 rounded-full shadow-sm">Bugün</Badge>
           </div>
 
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.sender === 'hasta' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`flex flex-col gap-1 max-w-[75%] sm:max-w-[60%] ${msg.sender === 'hasta' ? 'items-end' : 'items-start'}`}>
+              <div className={`flex flex-col gap-1.5 max-w-[85%] sm:max-w-[65%] ${msg.sender === 'hasta' ? 'items-end' : 'items-start'}`}>
                 <div 
-                  className={`px-4 py-2.5 rounded-2xl text-sm ${
+                  className={`px-5 py-3.5 rounded-3xl text-base shadow-sm ${
                     msg.sender === 'hasta' 
-                      ? 'bg-emerald-600 text-white rounded-tr-sm' 
-                      : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-sm'
+                      ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-tr-sm font-medium' 
+                      : 'bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-tl-sm font-medium'
                   }`}
                 >
                   {msg.text}
                   
                   {msg.file && (
-                    <div className="mt-3 bg-white/20 dark:bg-slate-800/50 rounded-lg p-3 flex items-center gap-3 border border-white/30 dark:border-slate-700">
-                      <div className="bg-rose-500 text-white p-2 rounded-md">
-                        <FileText className="w-5 h-5" />
+                    <div className="mt-3 bg-black/10 dark:bg-black/20 rounded-2xl p-3 flex items-center gap-4 border border-white/20">
+                      <div className="bg-white/20 backdrop-blur-sm p-2.5 rounded-xl text-white shadow-inner">
+                        <IconFileText stroke={1.5} className="w-6 h-6" />
                       </div>
-                      <div className="flex-1 truncate">
-                        <div className="font-semibold text-xs truncate">{msg.file.name}</div>
-                        <div className="text-[10px] opacity-80">{msg.file.size} • Tıkla ve İndir</div>
+                      <div className="flex-1 min-w-0 pr-4">
+                        <div className="font-extrabold text-sm truncate">{msg.file.name}</div>
+                        <div className="text-xs opacity-80 mt-0.5 font-semibold">{msg.file.size} • Tıkla ve İndir</div>
                       </div>
                     </div>
                   )}
                 </div>
                 
-                <div className="flex items-center gap-1 text-xs text-slate-400 px-1">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400 px-2">
                   {msg.time}
                   {msg.sender === 'hasta' && (
-                    msg.read ? <CheckCheck className="w-3.5 h-3.5 text-blue-500" /> : <Check className="w-3.5 h-3.5" />
+                    msg.read ? <IconChecks stroke={3} className="w-4 h-4 text-emerald-500" /> : <IconCheck stroke={3} className="w-4 h-4" />
                   )}
                 </div>
               </div>
@@ -107,24 +115,24 @@ export default function PatientMessagesPage() {
         </CardContent>
 
         {/* Chat Input */}
-        <CardFooter className="bg-white dark:bg-card border-t border-slate-100 dark:border-slate-800 p-4 shrink-0">
-          <div className="flex items-center gap-2 w-full bg-slate-50 dark:bg-slate-900 rounded-full border border-slate-200 dark:border-slate-800 p-1.5 pl-4 pr-1.5 focus-within:ring-2 focus-within:ring-emerald-500 focus-within:border-transparent transition-all">
+        <CardFooter className="bg-white dark:bg-slate-900/80 border-t border-slate-100 dark:border-slate-800/50 p-5 shrink-0">
+          <div className="flex items-center gap-2 w-full bg-slate-50 dark:bg-slate-800/50 rounded-full border border-slate-200 dark:border-slate-700 p-1.5 pl-6 pr-2 focus-within:ring-2 focus-within:ring-emerald-500/50 focus-within:border-emerald-500 transition-all shadow-inner">
             <Input 
-              className="flex-1 bg-transparent border-none shadow-none focus-visible:ring-0 px-0" 
+              className="flex-1 bg-transparent border-none shadow-none focus-visible:ring-0 px-0 h-12 text-base font-medium" 
               placeholder="Mesajınızı yazın..." 
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
             />
             <div className="flex items-center gap-1 shrink-0">
-              <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/50">
-                <Paperclip className="w-4 h-4" />
+              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/50 transition-colors">
+                <IconPaperclip stroke={2} className="w-5 h-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/50 hidden sm:flex">
-                <ImageIcon className="w-4 h-4" />
+              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/50 transition-colors hidden sm:flex">
+                <IconPhoto stroke={2} className="w-5 h-5" />
               </Button>
-              <Button size="icon" className="h-10 w-10 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-md ml-1" onClick={handleSend}>
-                <Send className="w-4 h-4 -ml-0.5 mt-0.5" />
+              <Button size="icon" className="h-12 w-12 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/30 ml-2 transition-transform hover:scale-105" onClick={handleSend}>
+                <IconSend stroke={2} className="w-5 h-5 ml-1" />
               </Button>
             </div>
           </div>

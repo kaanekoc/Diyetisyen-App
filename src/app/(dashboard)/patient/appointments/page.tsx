@@ -1,10 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useState, Fragment } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Clock, Video, MapPin, CheckCircle2, ChevronRight, AlertCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Tab } from "@headlessui/react";
+import { 
+  IconCalendarEvent, 
+  IconClock, 
+  IconVideo, 
+  IconCheck, 
+  IconChevronRight, 
+  IconAlertCircle,
+  IconX
+} from "@tabler/icons-react";
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ')
+}
 
 export default function PatientAppointmentsPage() {
   const [selectedDay, setSelectedDay] = useState<number | null>(15);
@@ -22,90 +35,136 @@ export default function PatientAppointmentsPage() {
     }
   ];
 
-  const availableDays = [14, 15, 16, 17, 18, 21, 22]; // Mock available days in current month
+  const availableDays = [14, 15, 16, 17, 18, 21, 22];
   const availableTimes = ["09:00", "09:30", "11:00", "14:30", "15:00", "16:30"];
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
+    <div className="space-y-8 animate-in fade-in duration-500 pb-20">
       <div>
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Randevularım</h2>
-        <p className="text-muted-foreground mt-1">Görüşmelerinizi takip edin ve yeni randevu talep edin.</p>
+        <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Randevularım</h2>
+        <p className="text-slate-500 dark:text-slate-400 mt-2 text-lg">Görüşmelerinizi takip edin ve yeni randevu talep edin.</p>
       </div>
 
-      <div className="grid xl:grid-cols-2 gap-8">
+      <div className="grid xl:grid-cols-12 gap-8 lg:gap-12">
         
-        {/* Sol Taraf: Yaklaşan Randevular */}
-        <div className="space-y-6">
-          <h3 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Yaklaşan Randevular</h3>
-          
-          {upcomingAppointments.length > 0 ? (
-            upcomingAppointments.map((apt) => (
-              <Card key={apt.id} className="border-emerald-200 dark:border-emerald-900/50 shadow-md bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-950/20 dark:to-card overflow-hidden">
-                <div className="h-1.5 w-full bg-emerald-500"></div>
-                <CardContent className="p-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                      <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm text-center min-w-[80px]">
-                        <div className="text-sm font-semibold text-rose-500">MART</div>
-                        <div className="text-3xl font-bold text-slate-800 dark:text-slate-100">{apt.date.split(' ')[0]}</div>
-                      </div>
-                      <div>
-                        <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-200 dark:bg-emerald-900/40 dark:text-emerald-400 border-none mb-2">
-                          <CheckCircle2 className="w-3 h-3 mr-1" /> {apt.status}
-                        </Badge>
-                        <div className="font-bold text-lg">{apt.doctor}</div>
-                        <div className="flex items-center text-sm text-muted-foreground mt-1">
-                          <Clock className="w-4 h-4 mr-1.5" /> {apt.time}
-                          <span className="mx-2">•</span>
-                          <Video className="w-4 h-4 mr-1.5" /> {apt.type}
+        {/* Sol Taraf: Randevular (Tabs) */}
+        <div className="xl:col-span-7 space-y-6">
+          <Tab.Group>
+            <Tab.List className="flex space-x-2 rounded-2xl bg-slate-200/50 dark:bg-slate-800/50 p-1.5 max-w-sm">
+              <Tab
+                className={({ selected }) =>
+                  classNames(
+                    'w-full rounded-xl py-2.5 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none',
+                    selected
+                      ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200'
+                  )
+                }
+              >
+                Yaklaşan Randevular
+              </Tab>
+              <Tab
+                className={({ selected }) =>
+                  classNames(
+                    'w-full rounded-xl py-2.5 text-sm font-semibold leading-5 transition-all duration-200 focus:outline-none',
+                    selected
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-200'
+                  )
+                }
+              >
+                Geçmiş
+              </Tab>
+            </Tab.List>
+            <Tab.Panels className="mt-6">
+              <Tab.Panel
+                className={classNames(
+                  'rounded-xl focus:outline-none focus:ring-0',
+                  'ring-white/60 ring-offset-2 ring-offset-emerald-400'
+                )}
+              >
+                {upcomingAppointments.length > 0 ? (
+                  upcomingAppointments.map((apt) => (
+                    <Card key={apt.id} className="border-0 shadow-xl shadow-slate-200/40 dark:shadow-none bg-white dark:bg-slate-900/50 overflow-hidden ring-1 ring-slate-200 dark:ring-slate-800 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group">
+                      <div className="h-2 w-full bg-gradient-to-r from-emerald-400 to-teal-500"></div>
+                      <CardContent className="p-6 sm:p-8">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+                            <div className="bg-slate-50 dark:bg-slate-800/80 p-5 rounded-2xl ring-1 ring-slate-200 dark:ring-slate-700 text-center min-w-[100px] flex flex-col justify-center items-center group-hover:scale-105 transition-transform duration-300">
+                              <div className="text-xs font-bold text-rose-500 uppercase tracking-widest mb-1">MART</div>
+                              <div className="text-4xl font-black text-slate-800 dark:text-white">{apt.date.split(' ')[0]}</div>
+                            </div>
+                            <div>
+                              <Badge className="bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:ring-emerald-500/20 border-none mb-3 px-3 py-1 text-xs">
+                                <IconCheck stroke={2} className="w-3.5 h-3.5 mr-1.5" /> {apt.status}
+                              </Badge>
+                              <div className="font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white mb-2">{apt.doctor}</div>
+                              <div className="flex flex-wrap items-center text-sm font-medium text-slate-500 dark:text-slate-400 gap-y-2">
+                                <span className="flex items-center bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">
+                                  <IconClock stroke={1.5} className="w-4 h-4 mr-2 text-indigo-500" /> {apt.time}
+                                </span>
+                                <span className="mx-3 text-slate-300 dark:text-slate-700">•</span>
+                                <span className="flex items-center bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">
+                                  <IconVideo stroke={1.5} className="w-4 h-4 mr-2 text-sky-500" /> {apt.type}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-3 min-w-[140px]">
+                            <Button className="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 shadow-lg shadow-slate-900/10 w-full sm:w-auto h-11 rounded-xl font-bold">
+                              <IconVideo stroke={2} className="w-5 h-5 mr-2" /> Katıl
+                            </Button>
+                            <Button variant="ghost" className="w-full sm:w-auto h-11 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-xl font-semibold">
+                              İptal Et
+                            </Button>
+                          </div>
                         </div>
-                      </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                ) : (
+                  <div className="p-12 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl bg-slate-50/50 dark:bg-slate-900/20">
+                    <div className="w-20 h-20 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm ring-1 ring-slate-100 dark:ring-slate-700">
+                      <IconCalendarEvent stroke={1.5} className="w-10 h-10 text-slate-300 dark:text-slate-500" />
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <Button className="bg-indigo-600 hover:bg-indigo-700 text-white w-full sm:w-auto">
-                        <Video className="w-4 h-4 mr-2" /> Görüşmeye Katıl
-                      </Button>
-                      <Button variant="outline" className="w-full sm:w-auto text-rose-600 hover:text-rose-700 hover:bg-rose-50 border-rose-200 dark:hover:bg-rose-900/20">
-                        İptal Et
-                      </Button>
-                    </div>
+                    <h3 className="text-lg font-bold text-slate-700 dark:text-slate-200 mb-1">Randevu Bulunamadı</h3>
+                    <p className="text-slate-500 dark:text-slate-400">Yaklaşan bir randevunuz bulunmuyor.</p>
                   </div>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <Card className="border-dashed bg-slate-50 dark:bg-slate-900/50 shadow-none">
-              <CardContent className="p-8 text-center text-slate-500 flex flex-col items-center">
-                <CalendarDays className="w-12 h-12 mb-3 opacity-20" />
-                <p>Yaklaşan bir randevunuz bulunmuyor.</p>
-              </CardContent>
-            </Card>
-          )}
+                )}
+              </Tab.Panel>
+              <Tab.Panel className="rounded-xl p-8 text-center text-slate-500 bg-slate-50 dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800">
+                Geçmiş randevu kaydınız bulunmuyor.
+              </Tab.Panel>
+            </Tab.Panels>
+          </Tab.Group>
 
-          <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/50 rounded-xl p-4 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-            <div className="text-sm text-amber-800 dark:text-amber-400">
-              <span className="font-semibold block mb-1">Randevu İptal Politikası</span>
-              Randevularınızı son 24 saate kadar iptal edebilirsiniz. Geç iptallerde diyetisyeninizin inisiyatifine bağlı olarak görüşme hakkınız yanabilir.
+          <div className="bg-amber-50 dark:bg-amber-500/10 ring-1 ring-amber-200/50 dark:ring-amber-500/20 rounded-2xl p-5 flex items-start gap-4">
+            <div className="bg-amber-100 dark:bg-amber-500/20 p-2 rounded-full shrink-0">
+              <IconAlertCircle stroke={2} className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            </div>
+            <div className="text-sm text-amber-800 dark:text-amber-300/80 leading-relaxed">
+              <span className="font-bold text-amber-900 dark:text-amber-300 block mb-1.5">Randevu İptal Politikası</span>
+              Randevularınızı son 24 saate kadar iptal edebilirsiniz. Geç iptallerde diyetisyeninizin inisiyatifine bağlı olarak görüşme hakkınız yanabilir. Lütfen randevu saatlerinize özen gösterin.
             </div>
           </div>
         </div>
 
         {/* Sağ Taraf: Randevu Al */}
-        <div className="space-y-6">
-          <h3 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Yeni Randevu Talep Et</h3>
+        <div className="xl:col-span-5 space-y-6">
+          <h3 className="font-bold text-xl text-slate-800 dark:text-white px-2">Yeni Randevu Al</h3>
           
-          <Card className="border-none shadow-md">
-            <CardHeader className="bg-slate-50/50 dark:bg-slate-900/20 border-b border-slate-100 dark:border-slate-800">
-              <CardTitle className="text-base flex items-center">
-                <CalendarDays className="w-5 h-5 mr-2 text-indigo-500" /> Uygun Günler (Mart 2026)
+          <Card className="border-0 shadow-xl shadow-slate-200/30 dark:shadow-none bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 rounded-3xl overflow-hidden">
+            <CardHeader className="bg-slate-50/50 dark:bg-slate-800/20 border-b border-slate-100 dark:border-slate-800/50 p-6">
+              <CardTitle className="text-lg font-bold flex items-center">
+                <IconCalendarEvent stroke={1.5} className="w-6 h-6 mr-3 text-indigo-500" />
+                Uygun Günler (Mart 2026)
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6">
-              <div className="grid grid-cols-7 gap-2 text-center mb-4 text-sm font-semibold text-slate-500">
+              <div className="grid grid-cols-7 gap-2 text-center mb-6 text-xs font-bold text-slate-400 uppercase tracking-wider">
                 <div>Pt</div><div>Sa</div><div>Ça</div><div>Pe</div><div>Cu</div><div>Ct</div><div>Pz</div>
               </div>
-              <div className="grid grid-cols-7 gap-2 text-center text-sm">
+              <div className="grid grid-cols-7 gap-x-2 gap-y-3 text-center text-sm font-semibold">
                 {/* Boşluklar */}
                 {Array.from({ length: 6 }).map((_, i) => <div key={`empty-${i}`} />)}
                 
@@ -114,21 +173,22 @@ export default function PatientAppointmentsPage() {
                   const day = i + 1;
                   const isAvailable = availableDays.includes(day);
                   const isSelected = selectedDay === day;
-                  const isPast = day < 12; // Mock bugünün tarihi 12
+                  const isPast = day < 12;
 
                   return (
-                    <div 
+                    <button 
                       key={day}
                       onClick={() => !isPast && isAvailable && setSelectedDay(day)}
+                      disabled={isPast || !isAvailable}
                       className={`
-                        h-10 rounded-full flex items-center justify-center transition-all
-                        ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-md transform scale-110' : ''}
-                        ${!isSelected && isAvailable && !isPast ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 cursor-pointer hover:bg-indigo-100 dark:hover:bg-indigo-900/60' : ''}
-                        ${(!isAvailable || isPast) && !isSelected ? 'text-slate-300 dark:text-slate-700 cursor-not-allowed' : ''}
+                        h-10 w-full rounded-xl flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
+                        ${isSelected ? 'bg-gradient-to-tr from-emerald-500 to-teal-400 text-white shadow-lg shadow-emerald-500/30 scale-110 ring-2 ring-offset-2 ring-emerald-500 dark:ring-offset-slate-900' : ''}
+                        ${!isSelected && isAvailable && !isPast ? 'bg-slate-50 dark:bg-slate-800/50 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 hover:text-indigo-700 dark:hover:bg-indigo-500/20 ring-1 ring-slate-200 dark:ring-slate-700' : ''}
+                        ${(!isAvailable || isPast) && !isSelected ? 'text-slate-300 dark:text-slate-600 opacity-50 cursor-not-allowed' : ''}
                       `}
                     >
                       {day}
-                    </div>
+                    </button>
                   )
                 })}
               </div>
@@ -136,30 +196,37 @@ export default function PatientAppointmentsPage() {
           </Card>
 
           {selectedDay && (
-            <Card className="border-none shadow-md animate-in slide-in-from-top-4">
-              <CardHeader className="bg-slate-50/50 dark:bg-slate-900/20 border-b border-slate-100 dark:border-slate-800">
-                <CardTitle className="text-base flex items-center">
-                  <Clock className="w-5 h-5 mr-2 text-indigo-500" /> {selectedDay} Mart İçin Uygun Saatler
+            <Card className="border-0 shadow-xl shadow-slate-200/30 dark:shadow-none bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 rounded-3xl overflow-hidden animate-in slide-in-from-top-4 duration-300">
+              <CardHeader className="bg-slate-50/50 dark:bg-slate-800/20 border-b border-slate-100 dark:border-slate-800/50 p-6">
+                <CardTitle className="text-lg font-bold flex items-center">
+                  <IconClock stroke={1.5} className="w-6 h-6 mr-3 text-indigo-500" />
+                  {selectedDay} Mart İçin Uygun Saatler
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                <div className="grid grid-cols-3 gap-3">
                   {availableTimes.map(time => (
-                    <Button 
+                    <button 
                       key={time}
-                      variant={selectedTime === time ? "default" : "outline"}
-                      className={selectedTime === time ? "bg-indigo-600 hover:bg-indigo-700" : "border-slate-200 dark:border-slate-800"}
                       onClick={() => setSelectedTime(time)}
+                      className={`
+                        h-12 rounded-xl text-sm font-bold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
+                        ${selectedTime === time 
+                          ? "bg-slate-900 text-white shadow-md dark:bg-white dark:text-slate-900 scale-[1.02]" 
+                          : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 ring-1 ring-slate-200 dark:ring-slate-700 hover:ring-slate-300 dark:hover:ring-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700"
+                        }
+                      `}
                     >
                       {time}
-                    </Button>
+                    </button>
                   ))}
                 </div>
 
                 {selectedTime && (
-                  <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 animate-in fade-in">
-                    <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-12 text-lg">
-                      Randevuyu Onayla <ChevronRight className="w-5 h-5 ml-2" />
+                  <div className="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white h-14 text-lg font-bold rounded-2xl shadow-xl shadow-emerald-500/20 group">
+                      Randevuyu Onayla 
+                      <IconChevronRight stroke={3} className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </div>
                 )}
