@@ -3,7 +3,7 @@ import Link from "next/link";
 import { 
   IconLayoutDashboard, 
   IconCalendarEvent, 
-  IconLogout, 
+  IconLogout,
   IconMenu2,
   IconBell,
   IconSettings,
@@ -12,6 +12,7 @@ import {
 import { Menu, MenuButton, MenuItems, MenuItem, Transition } from "@headlessui/react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SidebarNav } from "@/components/sidebar-nav";
+import { LogoutButton } from "@/components/logout-button";
 
 export default function DietitianLayout({ children }: { children: ReactNode }) {
   return (
@@ -32,10 +33,7 @@ export default function DietitianLayout({ children }: { children: ReactNode }) {
         <SidebarNav role="dietitian" />
 
         <div className="p-6 shrink-0">
-          <Link href="/api/auth/signout" className="group flex items-center justify-center gap-3 w-full px-4 py-3.5 text-sm font-bold rounded-2xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 shadow-xl shadow-slate-900/10 dark:shadow-white/10 transition-all duration-300">
-            <IconLogout stroke={2} className="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" />
-            Güvenli Çıkış
-          </Link>
+          <LogoutButton />
         </div>
       </aside>
 
